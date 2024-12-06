@@ -22,7 +22,7 @@ void main() async {
     anonKey: ConfigLoader.anonKey!, // Access the updated anon key
   );
 
-  runApp(ProviderScope(child: const DevCraftFolio()));
+  runApp(const ProviderScope(child: DevCraftFolio()));
 }
 
 class DevCraftFolio extends StatelessWidget {

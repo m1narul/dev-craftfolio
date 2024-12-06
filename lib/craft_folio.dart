@@ -31,11 +31,4 @@ class CraftFolio extends ConsumerWidget {
       ),
     );
   }
-
-  void _launchURL(String? url) {
-    // Launch the project link URL
-    if (url != null) {
-      // Open the URL (you can use the `url_launcher` package for this)
-    }
-  }
 }

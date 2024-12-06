@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Logger {
   // Log levels
   static const String info = 'INFO';
@@ -22,6 +24,6 @@ class Logger {
   // Private method to handle logging format
   static void _log(String level, String message) {
     final timestamp = DateTime.now().toIso8601String();
-    print('[$timestamp] [$level] $message');
+    debugPrint('[$timestamp] [$level] $message');
   }
 }
