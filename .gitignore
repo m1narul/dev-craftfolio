@@ -1,0 +1,100 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+# Flutter/Dart related
+.packages
+pubspec.lock
+build/
+
+# iOS related
+ios/Flutter/.last_build_id
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/Runner.xcodeproj/project.xcworkspace/
+ios/Runner.xcworkspace/xcuserdata/
+ios/Runner.xcuserdata/
+ios/Podfile.lock
+
+# Android related
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/.idea/
+android/app/.idea/
+android/app/.gradle/
+android/build/
+
+# Web related
+web/.dart_tool/
+web/build/
+
+# Custom config and credentials
+config/essential.json
+
+# IntelliJ/Android Studio related
+.vscode/
+
+# macOS related
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+macos/Pods/
+macos/.dart_tool/
+macos/build/
+
+# Linux related
+linux/.dart_tool/
+linux/build/
+
+# Windows related
+windows/.dart_tool/
+windows/build/
+
+# General IDE files
+*.swo
+*.DS_Store
+
+# Environment variable files
+.env
