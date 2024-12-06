@@ -71,9 +71,6 @@ android/build/
 web/.dart_tool/
 web/build/
 
-# Custom config and credentials
-config/essential.json
-
 # IntelliJ/Android Studio related
 .vscode/
 
