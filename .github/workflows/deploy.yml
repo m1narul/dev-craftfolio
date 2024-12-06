@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_TOKEN }}  # Authenticate using the token
+          token: ${{ secrets.GH_TOKEN }}  # Use the token here for authentication
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
