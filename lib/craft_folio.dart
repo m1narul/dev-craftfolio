@@ -1,46 +1,41 @@
-
+import 'package:dev_craftfolio/provider/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CraftFolio extends StatelessWidget {
+class CraftFolio extends ConsumerWidget {
   const CraftFolio({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final personalInfoAsyncValue = ref.watch(personalInfoProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Dev-Craftfolio')),
-      body: Center(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth < 600) {
-              return _buildMobileLayout();
-            } else {
-              return _buildWebLayout();
-            }
-          },
-        ),
+      body: Column(
+        children: [
+          // Personal Information
+          personalInfoAsyncValue.when(
+            data: (personalInfo) {
+              return ListTile(
+                title: Text(personalInfo['name']),
+                subtitle: Text(personalInfo['email']),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(personalInfo['profile_image'] ?? ''),
+                ),
+              );
+            },
+            loading: () => const CircularProgressIndicator(),
+            error: (error, stackTrace) => Text('Error: $error'),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildMobileLayout() {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Welcome to Dev-Craftfolio', style: TextStyle(fontSize: 24)),
-        SizedBox(height: 20),
-        Text('Showcase your projects here!'),
-      ],
-    );
-  }
-
-  Widget _buildWebLayout() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Welcome to Dev-Craftfolio', style: TextStyle(fontSize: 36)),
-        SizedBox(width: 20),
-        Text('Showcase your projects here!', style: TextStyle(fontSize: 24)),
-      ],
-    );
+  void _launchURL(String? url) {
+    // Launch the project link URL
+    if (url != null) {
+      // Open the URL (you can use the `url_launcher` package for this)
+    }
   }
 }

@@ -95,6 +95,8 @@ windows/build/
 
 # Environment variable files
 .env
+# Environment variable files
+config/essential.json
 
 # Flutter-generated plugin registrants (platform-specific)
 linux/flutter/generated_plugin_registrant.cc
