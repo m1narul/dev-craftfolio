@@ -3,7 +3,7 @@ name: Flutter Web Deploy
 on:
   push:
     branches:
-      - master  # Change this to the branch you want to trigger the deployment (e.g., 'master')
+      - master  # Trigger deployment on push to master
 
 jobs:
   build:
@@ -16,16 +16,16 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.5'  # Make sure to use the correct Flutter version
+          flutter-version: '3.24.5'  # Correct Flutter version
 
       - name: Install dependencies
         run: |
-          cd ./  # If your Flutter project is in a subdirectory, change this path to the correct one
+          cd ./  # Adjust if your Flutter project is in a subdirectory
           flutter pub get
 
       - name: Build Flutter Web App
         run: |
-          cd ./  # Make sure you are in the correct directory
+          cd ./  # Ensure you're in the correct directory
           flutter build web --release
 
       - name: Set up secrets for essential.json
@@ -36,16 +36,21 @@ jobs:
             "anonKey": "${{ secrets.ANONKEY }}"
           }' > config/essential.json
 
+      - name: Commit changes to essential.json if any
+        run: |
+          git add config/essential.json
+          git commit -m "Update essential.json with secrets" || echo "No changes to commit"
+
       - name: Copy build output to stable branch root
         run: |
           git fetch origin stable
           git checkout stable
-          cp -r build/web/* .
+          cp -r build/web/* .  # Copy the build output to the stable branch
 
       - name: Commit and push changes to stable
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Deploy Flutter Web app to GitHub Pages"
+          git commit -m "Deploy Flutter Web app to GitHub Pages" || echo "No changes to commit"
           git push origin stable --force
