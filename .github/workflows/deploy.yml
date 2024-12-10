@@ -16,13 +16,16 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.5'  # Use the exact version you're using.
+          flutter-version: '3.24.5'
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build Flutter Web app
         run: flutter build web --release
+
+      - name: List build directory contents (debugging step)
+        run: ls -l build/web
 
       - name: Setup Git for deploying
         run: |
@@ -36,8 +39,13 @@ jobs:
 
       - name: Copy build/web to stable branch
         run: |
-          rm -rf *  # Clear previous content in the stable branch
-          cp -R build/web/* .  # Copy new build content
+          if [ -d "build/web" ]; then
+            rm -rf *  # Clear previous content in the stable branch
+            cp -R build/web/* .  # Copy new build content
+          else
+            echo "Error: build/web not found"
+            exit 1
+          fi
 
       - name: Commit and push to stable
         run: |
