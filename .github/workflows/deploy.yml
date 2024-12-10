@@ -1,62 +1,46 @@
-name: Flutter Web Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - master  # Trigger deployment on push to master
+      - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}  # Use the token here for authentication
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.5'  # Correct Flutter version
+          flutter-version: 'stable'  # You can specify a specific version here.
 
       - name: Install dependencies
-        run: |
-          cd ./  # Adjust if your Flutter project is in a subdirectory
-          flutter pub get
+        run: flutter pub get
 
-      - name: Build Flutter Web App
-        run: |
-          cd ./  # Ensure you're in the correct directory
-          flutter build web --release
+      - name: Build Flutter Web app
+        run: flutter build web --release
 
-      - name: Set up secrets for essential.json
+      - name: Setup Git for deploying
         run: |
-          mkdir -p config
-          echo '{
-            "apiUrl": "${{ secrets.APIURL }}",
-            "anonKey": "${{ secrets.ANONKEY }}"
-          }' > config/essential.json
+          git config --global user.name "Minarul Ali"
+          git config --global user.email "minarul.ali@outlook.com"
 
-      - name: Stash any local changes before switching branches
-        run: |
-          git stash -u  # Stashes both tracked and untracked files
-
-      - name: Copy build output to stable branch root
+      - name: Checkout stable branch
         run: |
           git fetch origin stable
           git checkout stable
-          cp -r build/web/* .  # Copy the build output to the stable branch
 
-      - name: Commit and push changes to stable
+      - name: Copy build/web to stable branch
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          rm -rf *  # Clear previous content in the stable branch
+          cp -R build/web/* .  # Copy new build content
+
+      - name: Commit and push to stable
+        run: |
           git add .
-          git commit -m "Deploy Flutter Web app to GitHub Pages" || echo "No changes to commit"
-          git push origin stable --force
-
-      - name: Apply stashed changes after deployment (if any)
-        run: |
-          git checkout master
-          git stash pop || echo "No stashed changes"
+          git commit -m "Update GitHub Pages"
+          git push origin stable
