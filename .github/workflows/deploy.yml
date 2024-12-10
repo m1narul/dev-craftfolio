@@ -18,6 +18,9 @@ jobs:
         with:
           flutter-version: '3.24.5'
 
+      - name: Run flutter doctor (debugging step)
+        run: flutter doctor
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -25,7 +28,9 @@ jobs:
         run: flutter build web --release
 
       - name: List build directory contents (debugging step)
-        run: ls -l build/web
+        run: |
+          echo "Contents of build directory:"
+          ls -R build
 
       - name: Setup Git for deploying
         run: |
@@ -40,6 +45,7 @@ jobs:
       - name: Copy build/web to stable branch
         run: |
           if [ -d "build/web" ]; then
+            echo "Found build/web directory"
             rm -rf *  # Clear previous content in the stable branch
             cp -R build/web/* .  # Copy new build content
           else
